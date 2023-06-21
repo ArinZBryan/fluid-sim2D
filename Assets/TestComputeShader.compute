@@ -1,0 +1,49 @@
+// the program that runs in GPU accesses data videomemory in through "buffers"
+
+
+RWStructuredBuffer<int> result;					// this is a set of colors that has been prepared on CPU side and been written to GPU
+RWStructuredBuffer<int> params;
+
+int rgbaToInt(float4 rgba) {					// this function converts float4 color to int
+	int r = rgba.r * 255;						// we multiply each color component by 255 to get the value in range 0-255
+	int g = rgba.g * 255;
+	int b = rgba.b * 255;
+	int a = rgba.a * 255;
+	return (a << 24) | (b << 16) | (g << 8) | r;	// we pack the color components into one int value
+}
+
+int packRGBA(int r, int g, int b, int a)
+{
+	return r | (g << 8) | (b << 16) | (a << 24);
+}
+
+float4 unpackRGBA(int rgba)
+{
+	float4 res;
+	res.r = (rgba & 0xff) / 255.0f;
+	res.g = ((rgba >> 8) & 0xff) / 255.0f;
+	res.b = ((rgba >> 16) & 0xff) / 255.0f;
+	res.a = ((rgba >> 24) & 0xff) / 255.0f;
+	return res;
+}
+
+
+#pragma kernel CSMain							// kernel name declaration, we'll use the name to call kernel from CPU side
+[numthreads(1, 1, 1)]								// this directive defines the amount of threads this kernel will be runned in
+void CSMain(uint3 id : SV_DispatchThreadID) {	// now we write kernel's code. id parameter contains thread's index and used to access the right data
+	
+	int width = params[0];
+	int height = params[1];
+	int colA = params[2];
+	int colB = params[3];
+	
+	int index = id.x + id.y * params[0];
+
+	float4 colorA = unpackRGBA(colA);
+	float4 colorB = unpackRGBA(colB);
+	
+	float4 color = lerp(colorA, colorB, id.x / (float)width);
+	
+	result[index] = rgbaToInt(color);
+}
+

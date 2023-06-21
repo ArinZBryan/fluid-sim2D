@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 1861183644}
   - component: {fileID: 1861183645}
   - component: {fileID: 1861183646}
+  - component: {fileID: 1861183647}
   m_Layer: 0
   m_Name: Simulator
   m_TagString: Untagged
@@ -289,7 +290,7 @@ MonoBehaviour:
   stretchImage: 0
   aTexture: {fileID: 2800000, guid: 781af2bf97cdd5a479974e805b89d863, type: 3}
   blend1: {r: 1, g: 0, b: 0, a: 1}
-  blend2: {r: 0.036264896, g: 0, b: 1, a: 1}
+  blend2: {r: 0, g: 0, b: 1, a: 1}
   internalResolution: {x: 100, y: 100}
 --- !u!114 &1861183646
 MonoBehaviour:
@@ -298,8 +299,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1861183642}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aec76c364b1449149b14470e8122da43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1861183647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861183642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7583f938fa7422e48a32049eefc17f44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSize: {x: 512, y: 512}
+  useDynamicSizing: 0
+  shader: {fileID: 7200000, guid: 9415e47cb30fdcd41962aea3c05e1aa6, type: 3}
+  threadsMax: 1
